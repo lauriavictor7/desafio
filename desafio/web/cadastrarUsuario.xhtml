@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:decorate xmlns="http://www.w3.org/1999/xhtml"
+             xmlns:h="http://xmlns.jcp.org/jsf/html"
+             xmlns:p="http://primefaces.org/ui"
+             xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+             template="template.xhtml">
+
+    <h:form>
+        <p:messages showDetail="true"></p:messages>
+        <p:fieldset legend="Cadastro de Novo Usuário">
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Novo" action="#{usuarioBean.novo()}" update="@form"></p:commandButton>
+                    <p:commandButton value="Cadastrar" action="#{usuarioBean.cadastrar()}" disabled="#{usuarioBean.busca == true}" update="@form"></p:commandButton>
+                    <p:commandButton value="Buscar" action="#{usuarioBean.buscar()}" update="@form"></p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:panelGrid columns="2" rendered="#{usuarioBean.busca == false}">
+                <h:outputLabel for="usuario" value="Usuario"></h:outputLabel>
+                <p:inputText id="usuario" value="#{usuarioBean.entidade.usuario}"></p:inputText>
+                <h:outputLabel for="senha" value="Senha"></h:outputLabel>
+                <p:password id="senha" value="#{usuarioBean.entidade.senha}"></p:password>
+                <h:outputLabel for="nome" value="Nome"></h:outputLabel>
+                <p:inputText id="nome" value="#{usuarioBean.entidade.nome}"></p:inputText>
+                <h:outputLabel for="email" value="Email"></h:outputLabel>
+                <p:inputText id="email" value="#{usuarioBean.entidade.email}"></p:inputText>
+                <h:outputLabel for="fone" value="Fone"></h:outputLabel>
+                <p:inputMask mask="(99)99999-9999" id="fone" value="#{usuarioBean.entidade.fone}"></p:inputMask>
+            </p:panelGrid>
+            <p:dataTable value="#{usuarioBean.entidades}" var="usuario" rendered="#{usuarioBean.busca == true}">
+                <p:column>
+                    <p:commandButton value="Atualizar" action="#{usuarioBean.editar(usuario)}" update="@form"></p:commandButton>
+                    <p:commandButton value="Excluir" action="#{usuarioBean.remover(usuario)}" update="@form"></p:commandButton>
+                </p:column>
+                <p:column headerText="Usuario" sortBy="#{usuario.usuario}">
+                    <h:outputText value="#{usuario.usuario}"></h:outputText>
+                </p:column>
+                <p:column headerText="Senha">
+                    <h:outputText value="#{usuario.senha}"></h:outputText>
+                </p:column>
+                <p:column headerText="Nome">
+                    <h:outputText value="#{usuario.nome}"></h:outputText>
+                </p:column>
+                <p:column headerText="Email">
+                    <h:outputText value="#{usuario.email}"></h:outputText>
+                </p:column>
+                <p:column headerText="Fone">
+                    <h:outputText value="#{usuario.fone}"></h:outputText>
+                </p:column>
+            </p:dataTable>
+        </p:fieldset>
+    </h:form>
+</ui:decorate>
